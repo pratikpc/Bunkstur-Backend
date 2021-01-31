@@ -68,5 +68,23 @@ public class RestAPI {
         return attendanceAsyncService.RemoveSingleRecord(user.getName(), uuid)
                 .map(unused -> Response.status(Status.ACCEPTED).build());
     }
+
+    @POST
+    @Path("attendance")
+    public Uni<Response> AddUserAttendance(@NonNull AttendanceRest attendance, @Context SecurityContext context) {
+        final var acceptable = !attendance.Empty();
+        if (!acceptable)
+            return Uni.createFrom().item(Response.status(Status.BAD_REQUEST).build());
+        final var user = Utils.GetUser(context);
+
+        return Uni.combine().all().unis(
+                // Add Subject to list of Subjects
+                subjectAsyncService.Add(attendance.getSubject()),
+                // Add user to list of user
+                userAsyncService.Add(new User(user.getName(), user.getSubject())),
+                // Add Attendance information to list
+                attendanceAsyncService.Add(new Attendance(user.getName(), attendance))).discardItems()
+                .map(unused -> Response.status(Status.ACCEPTED).build());
+    }
     }
 }

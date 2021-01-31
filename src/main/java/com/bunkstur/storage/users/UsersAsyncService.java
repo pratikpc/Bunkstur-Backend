@@ -22,13 +22,13 @@ public class UsersAsyncService {
 
         public Uni<List<User>> All() {
                 ScanRequest scan = UsersAsyncService.BuildScan()
-                                // Return only subject name
+                                // Return all
                                 .attributesToGet(Columns.USER_ID, Columns.USER_CONTACT).build();
 
                 // Scan Items
                 return Uni.createFrom().completionStage(() -> dynamoDB.scan(scan)).onItem()
                                 .transform(resp -> resp.items().stream()
-                                                // Convert row to Subject Name
+                                                // Convert row to User
                                                 .map(row -> new User(row)).collect(Collectors.toList()));
         }
 

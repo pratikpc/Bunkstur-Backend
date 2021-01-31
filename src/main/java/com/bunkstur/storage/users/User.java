@@ -1,6 +1,5 @@
 package com.bunkstur.storage.users;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.validation.constraints.NotBlank;
@@ -24,10 +23,11 @@ public class User {
     }
 
     public Map<String, AttributeValue> AsRow() {
-        Map<String, AttributeValue> row = new HashMap<>();
-        row.put(Columns.USER_ID, AttributeValue.builder().s(userId).build());
-        row.put(Columns.USER_CONTACT, AttributeValue.builder().s(contact).build());
-        return row;
+        return Map.of(
+                // Map User ID
+                Columns.USER_ID, AttributeValue.builder().s(userId).build(),
+                // Map Contact
+                Columns.USER_CONTACT, AttributeValue.builder().s(contact).build());
     }
 
     /**

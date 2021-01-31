@@ -38,3 +38,25 @@ aws dynamodb create-table \
     --key-schema AttributeName=userid,KeyType=HASH \
     --billing-mode=PAY_PER_REQUEST
 ```
+---
+### Attendance
+1. UserID (Partition Key)
+2. UUID (Sort key)
+3. Subject
+4. Attendance Type (A/P/N)
+    - A: Absent
+    - P: Present
+    - N: No Lecture
+5. Date
+6. Time Start
+7. Time End
+
+#### AWS Command
+
+```shell script
+aws dynamodb create-table \
+    --table-name attendance \
+    --attribute-definitions AttributeName=userid,AttributeType=S AttributeName=uuid,AttributeType=S \
+    --key-schema AttributeName=userid,KeyType=HASH AttributeName=uuid,KeyType=RANGE \
+    --billing-mode=PAY_PER_REQUEST
+```

@@ -1,6 +1,5 @@
 package com.bunkstur.storage.subjects;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -37,19 +36,16 @@ public class SubjectAsyncService {
         }
 
         public Uni<Boolean> Add(final @NonNull String subject) {
-                Map<String, AttributeValue> item = new HashMap<>();
-                // Create item to insert
-                item.put(
-                                // Column Name
-                                Columns.SUBJECT_NAME,
-                                // Subject Name
-                                AttributeValue.builder().s(subject).build());
-                return Uni.createFrom().completionStage(() -> 
-                        dynamoDB.putItem(itemPutBuilder -> itemPutBuilder
+                return Uni.createFrom().completionStage(() -> dynamoDB.putItem(itemPutBuilder -> itemPutBuilder
                                 // Set Table Name
                                 .tableName(Table.NAME)
                                 // Set Item
-                                .item(item))).onItem().transform(resp -> true);
+                                .item( // Create item to insert
+                                                Map.of( // Column Name
+                                                                Columns.SUBJECT_NAME,
+                                                                // Subject Name
+                                                                AttributeValue.builder().s(subject).build()))))
+                                .onItem().transform(resp -> true);
         }
 
 }

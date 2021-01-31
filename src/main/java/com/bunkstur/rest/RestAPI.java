@@ -24,6 +24,7 @@ import com.bunkstur.storage.subjects.SubjectAsyncService;
 import com.bunkstur.storage.users.User;
 import com.bunkstur.storage.users.UsersAsyncService;
 
+import io.quarkus.cache.CacheResult;
 import io.reactivex.annotations.NonNull;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
@@ -46,6 +47,7 @@ public class RestAPI {
 
     @GET
     @Path("subjects")
+    @CacheResult(cacheName = "weather-cache")
     public Multi<String> Top30Subjects() {
         // Get only Top 30 results
         return subjectAsyncService.GetSubjects();

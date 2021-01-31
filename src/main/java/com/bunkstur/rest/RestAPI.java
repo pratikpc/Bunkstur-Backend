@@ -52,5 +52,13 @@ public class RestAPI {
         // Get only Top 30 results
         return subjectAsyncService.GetSubjects();
     }
+
+    @GET
+    @Path("attendance")
+    public Multi<Attendance> UserAttendance(@Context SecurityContext context) {
+        final var user = Utils.GetUser(context);
+        return attendanceAsyncService.SingleUser(user.getName());
+    }
+
     }
 }

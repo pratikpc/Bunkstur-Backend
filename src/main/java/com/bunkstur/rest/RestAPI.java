@@ -25,7 +25,8 @@ public class RestAPI {
 
     @GET
     @Path("subjects")
-    public Uni<List<String>> All() {
-        return subjectAsyncService.GetAllSubjects();
+    public Uni<List<String>> Top30Subjects() {
+        // Get only Top 30 results
+        return subjectAsyncService.GetSubjects(30);
     }
 }

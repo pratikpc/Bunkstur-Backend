@@ -23,10 +23,8 @@ public class SubjectAsyncService {
                 return ScanRequest.builder().tableName(Table.NAME);
         }
 
-        public Uni<List<String>> GetAllSubjects() {
-                ScanRequest scan = SubjectAsyncService.BuildScan()
-                                // Get only the top 30 results
-                                .limit(30)
+        public Uni<List<String>> GetSubjects(final int top) {
+                ScanRequest scan = SubjectAsyncService.BuildScan().limit(top)
                                 // Return only subject name
                                 .attributesToGet(Columns.SUBJECT_NAME).build();
 
@@ -46,14 +44,12 @@ public class SubjectAsyncService {
                                 Columns.SUBJECT_NAME,
                                 // Subject Name
                                 AttributeValue.builder().s(subject).build());
-                return Uni.createFrom()
-                                .completionStage(() -> dynamoDB.putItem(
-                                                itemPutBuilder -> itemPutBuilder
-                                                // Set Table Name
-                                                .tableName(Table.NAME)
-                                                // Set Item
-                                                .item(item)))
-                                .onItem().transform(resp -> true);
+                return Uni.createFrom().completionStage(() -> 
+                        dynamoDB.putItem(itemPutBuilder -> itemPutBuilder
+                                // Set Table Name
+                                .tableName(Table.NAME)
+                                // Set Item
+                                .item(item))).onItem().transform(resp -> true);
         }
 
 }

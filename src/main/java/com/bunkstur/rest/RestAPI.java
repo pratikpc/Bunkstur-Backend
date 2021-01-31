@@ -1,7 +1,5 @@
 package com.bunkstur.rest;
 
-import java.util.List;
-
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -86,5 +84,16 @@ public class RestAPI {
                 attendanceAsyncService.Add(new Attendance(user.getName(), attendance))).discardItems()
                 .map(unused -> Response.status(Status.ACCEPTED).build());
     }
+
+    @DELETE
+    @Path("/forgetme")
+    public Uni<Response> ForgetUserRecords(@Context SecurityContext context) {
+        final var user = Utils.GetUser(context);
+        return Uni.combine().all().unis(
+                // Remove user from list
+                userAsyncService.RemoveUser(user.getName()),
+                // Remove all attendance records for a user
+                attendanceAsyncService.RemoveUser(user.getName())).discardItems()
+                .map(unused -> Response.status(Status.ACCEPTED).build());
     }
 }

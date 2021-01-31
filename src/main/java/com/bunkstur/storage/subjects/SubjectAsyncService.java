@@ -46,7 +46,6 @@ public class SubjectAsyncService {
                                 Columns.SUBJECT_NAME,
                                 // Subject Name
                                 AttributeValue.builder().s(subject).build());
-                System.out.println(subject + " " + item + " " + Columns.SUBJECT_NAME);
                 return Uni.createFrom()
                                 .completionStage(() -> dynamoDB.putItem(
                                                 itemPutBuilder -> itemPutBuilder

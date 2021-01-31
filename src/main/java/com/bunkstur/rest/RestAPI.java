@@ -60,5 +60,13 @@ public class RestAPI {
         return attendanceAsyncService.SingleUser(user.getName());
     }
 
+    @DELETE
+    @Path("attendance/{uuid}")
+    public Uni<Response> RemoveUserAttendance(@PathParam("uuid") @NonNull String uuid,
+            @Context SecurityContext context) {
+        final var user = Utils.GetUser(context);
+        return attendanceAsyncService.RemoveSingleRecord(user.getName(), uuid)
+                .map(unused -> Response.status(Status.ACCEPTED).build());
+    }
     }
 }

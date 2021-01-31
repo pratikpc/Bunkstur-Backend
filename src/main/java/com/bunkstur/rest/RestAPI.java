@@ -13,11 +13,13 @@ import javax.ws.rs.core.MediaType;
 import com.bunkstur.storage.subjects.SubjectAsyncService;
 import com.bunkstur.storage.users.UsersAsyncService;
 
+import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 
 @Path("/api/v1/")
 @RequestScoped
 @Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 @RolesAllowed("**")
 public class RestAPI {
 
@@ -29,7 +31,7 @@ public class RestAPI {
 
     @GET
     @Path("subjects")
-    public Uni<List<String>> Top30Subjects() {
+    public Multi<String> Top30Subjects() {
         // Get only Top 30 results
         return subjectAsyncService.GetSubjects();
     }

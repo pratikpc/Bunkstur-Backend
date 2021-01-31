@@ -11,6 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.bunkstur.storage.subjects.SubjectAsyncService;
+import com.bunkstur.storage.users.UsersAsyncService;
 
 import io.smallrye.mutiny.Uni;
 
@@ -22,6 +23,9 @@ public class RestAPI {
 
     @Inject
     SubjectAsyncService subjectAsyncService;
+
+    @Inject
+    UsersAsyncService userAsyncService;
 
     @GET
     @Path("subjects")

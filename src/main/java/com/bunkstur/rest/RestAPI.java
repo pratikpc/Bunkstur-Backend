@@ -31,6 +31,7 @@ public class RestAPI {
     @Path("subjects")
     public Uni<List<String>> Top30Subjects() {
         // Get only Top 30 results
-        return subjectAsyncService.GetSubjects(30);
+        return subjectAsyncService.GetSubjects();
+    }
     }
 }

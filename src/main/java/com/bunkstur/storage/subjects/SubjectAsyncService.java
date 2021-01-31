@@ -22,8 +22,8 @@ public class SubjectAsyncService {
                 return ScanRequest.builder().tableName(Table.NAME);
         }
 
-        public Uni<List<String>> GetSubjects(final int top) {
-                ScanRequest scan = SubjectAsyncService.BuildScan().limit(top)
+        public Uni<List<String>> GetSubjects() {
+                ScanRequest scan = SubjectAsyncService.BuildScan()
                                 // Return only subject name
                                 .attributesToGet(Columns.SUBJECT_NAME).build();
 

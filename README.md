@@ -24,3 +24,17 @@ aws dynamodb create-table \
     --key-schema AttributeName=name,KeyType=HASH \
     --billing-mode=PAY_PER_REQUEST
 ```
+---
+### Users
+1. UserID (Partition/Sort Key)
+2. Contact information (Attribute) (Email ID or Phone Number. From Firebase JWT Token)
+
+#### AWS Command
+
+```shell script
+aws dynamodb create-table \
+    --table-name users \
+    --attribute-definitions AttributeName=userid,AttributeType=S \
+    --key-schema AttributeName=userid,KeyType=HASH \
+    --billing-mode=PAY_PER_REQUEST
+```

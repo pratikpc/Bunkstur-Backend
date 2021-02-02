@@ -18,7 +18,7 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 public class Attendance {
     private final String userId;
     private final String uuid;
-    private final @NotBlank String subject;
+    private final String subject;
     private final String attendanceType;
     private final @JsonFormat(pattern = "yyyy-MM-dd") LocalDate date;
     private final @JsonFormat(pattern = "HH:mm") LocalTime start;
@@ -72,7 +72,7 @@ public class Attendance {
                 LocalTime.parse(attendance.get(Columns.TIME_END).s(), LocalTimeFormatter),
                 // UUID
                 attendance.get(Columns.UUID).s());
-    }
+            }
 
     // Mapper Function
     public Map<String, AttributeValue> AsRow() {
@@ -90,6 +90,7 @@ public class Attendance {
                 // Time End
                 Columns.TIME_END, AttributeValue.builder().s(end.format(LocalTimeFormatter)).build());
     }
+
 
     /**
      * @return the date
@@ -124,6 +125,14 @@ public class Attendance {
      */
     public String getUuid() {
         return uuid != null ? uuid : UUID.randomUUID().toString();
+    }
+
+    
+    /**
+     * @return the attendance type
+     */
+    public String getAttendanceType() {
+        return attendanceType;
     }
 
     /**

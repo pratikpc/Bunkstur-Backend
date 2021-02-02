@@ -81,7 +81,7 @@ public class RestAPI {
                 // Add Subject to list of Subjects
                 subjectAsyncService.Add(attendance.getSubject()),
                 // Add user to list of user
-                userAsyncService.Add(new User(user.getName(), user.getSubject())),
+                userAsyncService.Add(new User(user.getName(), (String) user.getClaim("email"))),
                 // Add Attendance information to list
                 attendanceAsyncService.Add(new Attendance(user.getName(), attendance))).discardItems()
                 .map(unused -> Response.status(Status.ACCEPTED).build());
